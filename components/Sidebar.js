@@ -1,8 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation'; // 클라이언트 컴포넌트 안에서만 가능
+import { useSelector } from 'react-redux';
 
-export default function Sidebar({ savedTodos }) {
+export default function Sidebar() {
+  const savedTodos = useSelector((state) => state.savedTodos);
   const router = useRouter();
 
   const convertToDate = (savedId) => {

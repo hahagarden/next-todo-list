@@ -1,10 +1,11 @@
-'use client';
-
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTodo, resetTodo } from '../redux/todayTodosSlice';
+import { addSaving } from '../redux/savedTodosSlice';
 
 export default function TodoList({ currentTodos }) {
   const [input, setInput] = useState('');
-  const [todos, setTodos] = useState(currentTodos);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -13,7 +14,7 @@ export default function TodoList({ currentTodos }) {
         <button
           onClick={(e) => {
             e.preventDefault();
-            setTodos((prev) => [...prev, { id: Date.now(), content: input }]);
+            dispatch(addTodo({ id: Date.now(), content: input }));
             setInput('');
           }}
         >
@@ -21,12 +22,24 @@ export default function TodoList({ currentTodos }) {
         </button>
       </form>
       <ul>
-        {todos.map((todo) => (
+        {currentTodos.map((todo) => (
           <li key={todo.id}>{todo.content}</li>
         ))}
       </ul>
-      <button onClick={() => setTodos([])}>Reset</button>
-      <button onClick={() => {}}>Save</button>
+      <button
+        onClick={() => {
+          dispatch(resetTodo());
+        }}
+      >
+        Reset
+      </button>
+      <button
+        onClick={() => {
+          dispatch(addSaving({ id: Date.now(), todos: currentTodos }));
+        }}
+      >
+        Save
+      </button>
     </>
   );
 }
