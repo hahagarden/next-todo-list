@@ -1,5 +1,5 @@
 import { savedTodos } from '@/app/layout';
-import List from '@/components/List';
+import TodoList from '@/components/TodoList';
 
 export async function generateMetadata({ params: { savedId } }) {
   const timestamp = new Date(Number(savedId));
@@ -12,8 +12,8 @@ export async function generateMetadata({ params: { savedId } }) {
   };
 }
 
-export default function savedTodo({ params: { savedId } }) {
-  const currentTodos = savedTodos.find((saved) => saved.id === Number(savedId));
+export default function SavedTodosPage({ params: { savedId } }) {
+  const targetTodos = savedTodos.find((saved) => saved.id === Number(savedId));
 
-  return <List todos={currentTodos.todos} />;
+  return <TodoList currentTodos={targetTodos.todos} />;
 }
